@@ -22,6 +22,7 @@ class Car(db.Model):
     created = db.Column(db.DateTime, default=datetime.now)
 
 class RentTime(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
     car = db.Column(db.Integer)
     start_rent = db.Column(db.DateTime)
     end_rent = db.Column(db.DateTime)
