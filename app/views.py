@@ -7,15 +7,15 @@ from datetime import datetime
 @app.route('/')
 def index():
     
-    # Получаем все записи из таблицы Product
-    car_list = Car.query.all()
+    # Получаем все записи из таблицы Auto
+    auto_list = Auto.query.all()
 
     # Получаем все записи из таблицы User
     user_list = User.query.all()
 
     # Полученные наборы передаем в контекст
     context = {
-        'product_list': product_list,
+        'auto_list': auto_list,
         'user_list': user_list,
     }
 
@@ -24,20 +24,29 @@ def index():
 
 @app.route('/create_auto', methods=['POST', 'GET'])
 def create_auto():
-
+#НЕЗАКОНЧЕНО
     context = None
 
     if request.method == 'POST':
         
-        # Пришел запрос с методом POST (пользователь нажал на кнопку 'Добавить товар')
-        # Получаем название товара - это значение поля input с атрибутом name="title"
-        car_title = request.form['title']
+        # Пришел запрос с методом POST (пользователь нажал на кнопку 'Добавить машину')
+        # Получаем название машины - это значение поля input с атрибутом name="name"
+        auto_title = request.form['name']
 
-        # Получаем цену товара - это значение поля input с атрибутом name="price"
-        product_price = request.form['price']
+        # Получаем цену машины - это значение поля input с атрибутом name="price"
+        auto_price = request.form['price']
+
+        # Получаем описание машины - это значение поля input с атрибутом name="description"
+        auto_description = request.form['description']
+
+        # Получаем КПП машины - это значение поля input с атрибутом name="transmission"
+        # РАЗОБРАТЬСЯ С ПЕРЕДАЧЕЙ. TRUE/FALSE
+        auto_transmission = request.form['transmission']
+
+        #ДОБАВИТЬ в create_auto поля для картинок
 
         # Добавляем товар в базу данных
-        db.session.add(Product(title=product_title, price=product_price, img_url=request.form['img_url']))
+        db.session.add(Auto(title=auto_title, price=auto_price, description=auto_description, at=True))
 
         # сохраняем изменения в базе
         db.session.commit()
@@ -45,51 +54,51 @@ def create_auto():
         # Заполняем словарь контекста
         context = {
             'method': 'POST',
-            'title': product_title,
-            'price': product_price,
+            'title': auto_title,
+            'price': auto_price,
         }
     
     elif request.method == 'GET':
 
-        # Пришел запрос с методом GET - пользователь просто открыл в браузере страницу по адресу http://127.0.0.1:5000/create_product
+        # Пришел запрос с методом GET - пользователь просто открыл в браузере страницу по адресу http://127.0.0.1:5000/create_auto
         # В этом случае просто передаем в контекст имя метода
         context = {
             'method': 'GET',
         }
 
-    return render_template('create_product.html', **context)
+    return render_template('create_auto.html', **context)
 
-@app.route('/create_user', methods=['POST', 'GET'])
-def create_user():
+#@app.route('/create_user', methods=['POST', 'GET'])
+#def create_user():
+#
+#    context = None
+#
+#    if request.method == 'POST':
+#        
+#        name = request.form['name']
+#        username = request.form['username']
+#
+#        db.session.add(User(name=name, username=username))
+#        db.session.commit()
+#
+#        context = {
+#            'method': 'POST',
+#            'name': name,
+#            'username': username,
+#        }
+#    
+#    elif request.method == 'GET':
+#
+#        context = {
+#            'method': 'GET',
+#        }
+#
+#    return render_template('create_user.html', **context)
 
-    context = None
-
-    if request.method == 'POST':
-        
-        name = request.form['name']
-        username = request.form['username']
-
-        db.session.add(User(name=name, username=username))
-        db.session.commit()
-
-        context = {
-            'method': 'POST',
-            'name': name,
-            'username': username,
-        }
+@app.route('/auto_detail/<int:product_id>', methods=['POST', 'GET'])
+def auto_detail(auto_id):
     
-    elif request.method == 'GET':
-
-        context = {
-            'method': 'GET',
-        }
-
-    return render_template('create_user.html', **context)
-
-@app.route('/product_detail/<int:product_id>', methods=['POST', 'GET'])
-def product_detail(product_id):
-    
-    product = Product.query.get(product_id)
+    aoto = Auto.query.get(auto_id)
 
 
     context = None
@@ -131,10 +140,10 @@ def product_detail(product_id):
 
     return render_template('product_detail.html', **context)
 
-@app.route('/del_product/<int:product_id>', methods=['POST'])
-def del_product(product_id):
-    
-    product = Product.query.get(product_id)
+@app.route('/rental_log/<int:auto_id>', methods=['POST'])
+def rental_log(auto_id):
+# Вывод журнала. ТРЕБУЕТСЯ НАПИСАТЬ    
+    auto = Product.query.get(auto_id)
 
     context = {
         'title': product.title,
