@@ -1,5 +1,5 @@
 from app import app, db
-from app.models import User, Product
+from app.models import User, Auto, RentTime
 from flask import render_template, request
 from datetime import datetime
 
