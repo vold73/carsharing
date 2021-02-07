@@ -196,7 +196,7 @@
                                 <div class="row align-items-center">
                                     <div class="col-md-8">
                                         <div class="page-header-title">
-                                            <h5 class="m-b-10">{{ name_auto }}</h5>
+                                            <h5 class="m-b-10">{{ title }}</h5>
 
                                         </div>
                                     </div>
@@ -282,15 +282,15 @@
                                                                     <div>
                                                                         <div class="col-lg-12">
                                                                             <span class="txt-muted d-block">ID авто:
-                                                                                <span>{{ id_auto }}</span>
+                                                                                <span>{{ id }}</span>
                                                                             </span>
                                                                             <span class="txt-muted d-block">Доступность:
                                                                                 <span
-                                                                                    class="text-primary">{{ in_rent_or_free }}</span>
+                                                                                    class="text-primary">{{ in_rent }}</span>
                                                                             </span>
                                                                         </div>
                                                                         <div class="col-lg-12">
-                                                                            <h4 class="pro-desc">{{ name_auto }}
+                                                                            <h4 class="pro-desc">{{ title }}
                                                                             </h4>
                                                                         </div>
                                                                         <div class="col-lg-12">
@@ -315,7 +315,7 @@
                                                                                 class="text-primary product-price">{{ price }}
                                                                                 руб/мин</span>
                                                                             <hr>
-                                                                            <p>{{ auto_description }}
+                                                                            <p>{{ description }}
                                                                             </p>
                                                                             <hr>
                                                                         </div>
@@ -387,18 +387,15 @@
                                                                 </tr>
                                                             </thead>
                                                             <tbody>
+                                                                {% for log in log_list %}
                                                                 <tr>
-                                                                    <th scope="row">1</th>
-                                                                    <td>{{ date_and_time_rent_bigin }}</td>
-                                                                    <td>{{ date_and_time_rent_end }}</td>
-                                                                    <td>{{ total_cost_of_rent }}</td>
+                                                                    <th scope="row">{{ loop.index }}</th>
+                                                                    <td>{{ log.start_rent }}</td>
+                                                                    <td>{{ log.end_rent }}</td>
+                                                                    <td>{{ log.cost }}</td>
                                                                 </tr>
-                                                                <tr>
-                                                                    <th scope="row">2</th>
-                                                                    <td>{{ date_and_time_rent_bigin }}</td>
-                                                                    <td>{{ date_and_time_rent_end }}</td>
-                                                                    <td>{{ total_cost_of_rent }}</td>
-                                                                </tr>
+                                                                {% endfor %}
+
                                                             </tbody>
                                                         </table>
                                                     </div>

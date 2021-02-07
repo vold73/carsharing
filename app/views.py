@@ -95,10 +95,12 @@ def create_auto():
 #
 #    return render_template('create_user.html', **context)
 
-@app.route('/auto_detail/<int:product_id>', methods=['POST', 'GET'])
+@app.route('/auto_detail/<int:auto_id>', methods=['POST', 'GET'])
 def auto_detail(auto_id):
     
-    aoto = Auto.query.get(auto_id)
+    auto = Auto.query.get(auto_id)
+
+    log_list = RentTime.query.filter_by(auto=auto_id).all()
 
 
     context = None
@@ -109,36 +111,42 @@ def auto_detail(auto_id):
 
         new_title = request.form['new_title']
         new_price = request.form['new_price']
-        new_img_url = request.form['new_img_url']
+        new_img_url1 = request.form['new_img_url1']
+        new_description = request.form['description']
 
 
         if new_title:
-            product.title = request.form['new_title']
+            auto.title = request.form['new_title']
         
         if new_price:
-            product.price = request.form['new_price']
+            auto.price = request.form['new_price']
         
-        if new_img_url:
-            product.img_url = request.form['new_img_url']
+        if new_img_url1:
+            auto.img_url1 = request.form['new_img_url1']
 
+        if new_description:
+            auto.description = request.form['description']
 
         db.session.commit()
 
 
-    age_seconds = (datetime.now() - product.created).seconds
-    age = divmod(age_seconds, 60)
+    #age_seconds = (datetime.now() - auto.created).seconds
+    #age = divmod(age_seconds, 60)
 
 
     context = {
-        'id': product.id,
-        'title': product.title,
-        'price': product.price,
-        'img_url': product.img_url,
-        'age': f'{age[0]} мин {age[1]} сек',
+        'id': auto.id,
+        'title': auto.title,
+        'price': auto.price,
+        'img_url1': auto.img_url1,
+        'description': auto.description,
+        'yes_or_not': "ДА",
+        'in_rent': "RENT",
+        'log_list': log_list,
     }
 
 
-    return render_template('product_detail.html', **context)
+    return render_template('auto_detail.html', **context)
 
 @app.route('/rental_log/<int:auto_id>', methods=['POST'])
 def rental_log(auto_id):
