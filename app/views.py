@@ -10,13 +10,13 @@ def index():
     # Получаем все записи из таблицы Auto
     auto_list = Auto.query.all()
 
-    # Получаем все записи из таблицы User
-    user_list = User.query.all()
+    # Получаем все записи из таблицы User (пока не обрабатываем)
+    # user_list = User.query.all()
 
     # Полученные наборы передаем в контекст
     context = {
-        'auto_list': auto_list,
-        'user_list': user_list,
+        'auto_list': auto_list
+    #    'user_list': user_list,
     }
 
     return render_template('index.html', **context)

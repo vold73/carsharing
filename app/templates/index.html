@@ -214,6 +214,7 @@
                                     <div class="page-body">
 
                                         <div class="row">
+                                            {% for auto in auto_list %}
                                             <div class="col-xl-4 col-md-6 col-sm-6 col-xs-12">
                                                 <div class="card prod-view">
                                                     <div class="prod-item text-center">
@@ -233,20 +234,21 @@
                                                                 </button>
                                                             </div>
                                                             <a href="#!" class="hvr-shrink">
-                                                                <img src="/assets/images/auto/auto1_1.jpg"
-                                                                    class="img-fluid o-hidden" alt="auto1.jpg">
+                                                                <img src="/assets/images/auto/{{ auto.img_url1 }}"
+                                                                    class="img-fluid o-hidden" alt="{{ auto.img_url1 }}">
                                                             </a>
                                                             <div class="p-new"><a href=""> New </a></div>
                                                         </div>
                                                         <div class="prod-info">
-                                                            <a href="#!" class="txt-muted">
-                                                                <h4>{{ name_auto }}</h4>
+                                                            <a href="/auto_detail/{{ auto.id }}" class="txt-muted">
+                                                                <h4>{{ auto.title }}</h4>
                                                             </a>
-                                                            <span class="prod-price">{{ rent_price }} р/мин</span>
+                                                            <span class="prod-price">{{ auto.price }} р/мин</span>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            {% endfor %}
                                         </div>
 
                                     </div>
