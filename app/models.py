@@ -2,12 +2,6 @@ from app import db
 from datetime import datetime
 
 
-class User(db.Model):
-    id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(128), unique = True)
-    name = db.Column(db.String(128))
-
-
 class Auto(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     title = db.Column(db.String(128))

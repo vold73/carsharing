@@ -230,22 +230,22 @@
                                                                         <div id="big_banner">
                                                                             <div class="port_big_img">
                                                                                 <img class="img img-fluid"
-                                                                                    src="/assets/images/auto/auto1_1.jpg"
+                                                                                    src="/assets/images/auto/{{ img_url1 }}"
                                                                                     alt="Big_ Details">
                                                                             </div>
                                                                             <div class="port_big_img">
                                                                                 <img class="img img-fluid"
-                                                                                    src="/assets/images/auto/auto1_2.jpg"
+                                                                                    src="/assets/images/auto/{{ img_url2 }}"
                                                                                     alt="Big_ Details">
                                                                             </div>
                                                                             <div class="port_big_img">
                                                                                 <img class="img img-fluid"
-                                                                                    src="/assets/images/auto/auto1_3.jpg"
+                                                                                    src="/assets/images/auto/{{ img_url3 }}"
                                                                                     alt="Big_ Details">
                                                                             </div>
                                                                             <div class="port_big_img">
                                                                                 <img class="img img-fluid"
-                                                                                    src="/assets/images/auto/auto1_4.jpg"
+                                                                                    src="/assets/images/auto/{{ img_url4 }}"
                                                                                     alt="Big_ Details">
                                                                             </div>
                                                                         </div>
@@ -254,22 +254,22 @@
                                                                         <div id="small_banner">
                                                                             <div>
                                                                                 <img class="img img-fluid"
-                                                                                    src="/assets/images/auto/auto1_1.jpg"
+                                                                                    src="/assets/images/auto/{{ img_url1 }}"
                                                                                     alt="small-details">
                                                                             </div>
                                                                             <div>
                                                                                 <img class="img img-fluid"
-                                                                                    src="/assets/images/auto/auto1_2.jpg"
+                                                                                    src="/assets/images/auto/{{ img_url2 }}"
                                                                                     alt="small-details">
                                                                             </div>
                                                                             <div>
                                                                                 <img class="img img-fluid"
-                                                                                    src="/assets/images/auto/auto1_3.jpg"
+                                                                                    src="/assets/images/auto/{{ img_url3 }}"
                                                                                     alt="small-details">
                                                                             </div>
                                                                             <div>
                                                                                 <img class="img img-fluid"
-                                                                                    src="/assets/images/auto/auto1_4.jpg"
+                                                                                    src="/assets/images/auto/{{ img_url4 }}"
                                                                                     alt="small-details">
                                                                             </div>
                                                                         </div>
@@ -286,7 +286,11 @@
                                                                             </span>
                                                                             <span class="txt-muted d-block">Доступность:
                                                                                 <span
-                                                                                    class="text-primary">{{ in_rent }}</span>
+                                                                                {% if in_rent: %}
+                                                                                class="text-primary">СВОБОДНА</span>
+                                                                                {% else %}
+                                                                                class="text-primary">АРЕНДОВАНА c {{ start_rent.strftime("%d.%m.%y %H:%M") }}</span>
+                                                                                {% endif %}
                                                                             </span>
                                                                         </div>
                                                                         <div class="col-lg-12">
@@ -295,7 +299,11 @@
                                                                         </div>
                                                                         <div class="col-lg-12">
                                                                             <span class="txt-muted">Автоматическая КПП:
-                                                                                {{ yes_or_not }}
+                                                                                {% if yes_or_not: %}
+                                                                                ДА
+                                                                                {% else %}
+                                                                                НЕТ
+                                                                                {% endif %}                                                                                
                                                                             </span>
                                                                         </div>
                                                                         <div
@@ -390,8 +398,8 @@
                                                                 {% for log in log_list %}
                                                                 <tr>
                                                                     <th scope="row">{{ loop.index }}</th>
-                                                                    <td>{{ log.start_rent }}</td>
-                                                                    <td>{{ log.end_rent }}</td>
+                                                                    <td>{{ log.start_rent.strftime("%d.%m.%y %H:%M") }}</td>
+                                                                    <td>{{ log.end_rent.strftime("%d.%m.%y %H:%M") }}</td>
                                                                     <td>{{ log.cost }}</td>
                                                                 </tr>
                                                                 {% endfor %}
