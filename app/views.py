@@ -110,7 +110,7 @@ def auto_detail(auto_id):
         'price': auto.price,
         'description': auto.description,
         'yes_or_not': auto.at,
-        'in_rent': auto.free,
+        'auto_free': auto.free,
         'start_rent':auto.start_rent,
         'log_list': log_list,
         'img_url1': auto.img_url1,
@@ -138,10 +138,12 @@ def rental_log():
 
         # добавляем в пустой словарь все нужные поля
         log_record['img'] = auto_id.img_url1
-        log_record['title'] = auto_id.title        
+        log_record['title'] = auto_id.title
+        log_record['description'] = auto_id.description
         log_record['count'] = len(log_list)
         log_record['cost'] = sum(item.cost for item in log_list)
         seconds = sum((item.end_rent - item.start_rent).seconds for item in log_list)
+        # расчитываем количество секунд, минут, часов и дней общего времени аренды
         minutes = divmod(seconds, 60)
         hours = divmod(minutes[0], 60)
         days = divmod(hours[0], 24)
@@ -151,7 +153,24 @@ def rental_log():
     
     
     context = {
-            'log': log,
+            'log': log,            
     }
 
     return render_template('rental_log.html', **context)
+
+
+@app.route('/del_auto/<int:auto_id>', methods=['POST'])
+def del_auto(auto_id):
+    
+    auto = Auto.query.get(auto_id)
+
+    context = {
+        'title': auto.title,
+        'price': auto.price,
+        'img_url1': auto.img_url1,
+    }
+    
+    db.session.delete(auto)
+    db.session.commit()
+
+    return render_template('del_auto.html', **context)
