@@ -41,12 +41,26 @@ def create_auto():
 
         # Получаем КПП машины - это значение поля input с атрибутом name="transmission"
         # РАЗОБРАТЬСЯ С ПЕРЕДАЧЕЙ. TRUE/FALSE
-        auto_transmission = request.form['transmission']
+        auto_at = request.form['transmission']
+
+        auto_img1 = request.form['img_url1']
+        auto_img2 = request.form['img_url2']
+        auto_img3 = request.form['img_url3']
+        auto_img4 = request.form['img_url4']
 
         #ДОБАВИТЬ в create_auto поля для картинок
 
         # Добавляем товар в базу данных
-        db.session.add(Auto(title=auto_title, price=auto_price, description=auto_description, at=True))
+        db.session.add(Auto(title = auto_title, 
+                            price = auto_price, 
+                            description = auto_at, 
+                            #at = 1 if auto_at == 'at_yes' else 0, 
+                            img_url1 = auto_img1, 
+                            img_url2 = auto_img2,
+                            img_url3 = auto_img3,
+                            img_url4 = auto_img4,
+                            free = 1,
+                            created = datetime.now()))
 
         # сохраняем изменения в базе
         db.session.commit()
@@ -73,7 +87,6 @@ def create_auto():
 def auto_detail(auto_id):
     
     auto = Auto.query.get(auto_id)
-
     log_list = RentTime.query.filter_by(auto=auto_id).all()
 
 
